@@ -1,0 +1,44 @@
+<div id="genome_browser" >
+    <style>
+     #bdDiv {
+         width: 100%,
+         float: left;
+     }
+     .powered-by {
+         display: none;
+     }
+    </style>
+
+    <script language="javascript" type="text/javascript" src="/dalliance/dalliance-all.js"></script>
+    <script language="javascript" src="/browser/browser.js"></script>
+
+    <script language="javascript">
+     var sources = [
+         {
+             name: 'Genome',
+             twoBitURI: 'http:www.biodalliance.org/datasets/GRCm38/mm10.2bit',
+             desc: 'Mouse reference genome build GRCm38',
+             tier_type: 'sequence',
+             provides_entrypoints: true
+         },
+         {
+             name: 'GWAS',
+             renderer: "gwasRenderer",
+             "forceReduction": -1,
+             bwgURI: 'http:localhost:8080/gwascatalog.bb'
+         },
+         {
+             name: 'QTL',
+             tier_type: 'qtl',
+             renderer: "qtlRenderer",
+             uri: 'http:test-gn2.genenetwork.org/api_pre1/qtl/lod2.csv'
+         }
+     ];
+
+     PS.main(WrappedRenderer.wrapRenderer)(Browser)(sources)();
+
+    </script>
+
+    <div id="bdDiv"></div>
+
+</div>
