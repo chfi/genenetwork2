@@ -22,3 +22,7 @@ app.jinja_env.globals.update(
 )
 
 import wqflask.views
+
+from genetics_browser import genetics_browser
+
+app.register_blueprint(genetics_browser)

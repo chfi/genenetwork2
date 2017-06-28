@@ -71,6 +71,8 @@ import werkzeug
 import utility.logger
 logger = utility.logger.getLogger(__name__ )
 
+import genetics_browser as gb
+
 @app.before_request
 def connect_db():
     db = getattr(g, '_database', None)
@@ -159,6 +161,13 @@ def browser(filename):
 def dalliance(filename):
     dalliance_path = js_path("dalliance")
     return send_from_directory(dalliance_path, filename)
+
+@app.route("/browser_view/")
+def browser_view():
+    genome_config = gb.genome_track("Genome", "http://www.biodalliance.org/datasets/GRCm38/mm10.2bit")
+    qtl_config = gb.qtl_track("QTL", "http://test-gn2.genenetwork.org/api_pre1/qtl/lod2csv")
+    gwas_config = gb.gwas_track("GWAS", "http://localhost:8080/gwascatalog.bb")
+    return render_template("browser/browser.html", track_configs = [genome_config, qtl_config, gwas_config])
 
 #@app.route("/data_sharing")
 #def data_sharing_page():
