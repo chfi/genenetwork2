@@ -165,7 +165,7 @@ def dalliance(filename):
 @app.route("/browser_view/")
 def browser_view():
     genome_config = gb.genome_track("Genome", "http://www.biodalliance.org/datasets/GRCm38/mm10.2bit")
-    qtl_config = gb.qtl_track("QTL", "http://test-gn2.genenetwork.org/api_pre1/qtl/lod2csv")
+    qtl_config = gb.qtl_track("QTL", "http://test-gn2.genenetwork.org/api_pre1/qtl/lod2.csv")
     gwas_config = gb.gwas_track("GWAS", "http://localhost:8080/gwascatalog.bb")
     return render_template("browser/browser.html", track_configs = [genome_config, qtl_config, gwas_config])
 
