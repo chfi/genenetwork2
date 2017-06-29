@@ -612,6 +612,12 @@ def marker_regression_page():
                                                default=json_default_handler,
                                                indent="   ")
 
+
+        genome_config = gb.genome_track("Genome", "http://www.biodalliance.org/datasets/GRCm38/mm10.2bit")
+        qtl_config = gb.qtl_track("QTL", "http://test-gn2.genenetwork.org/api_pre1/qtl/lod2.csv")
+        gwas_config = gb.gwas_track("GWAS", "http://localhost:8080/gwascatalog.bb")
+        track_configs = [genome_config, qtl_config, gwas_config]
+
         result = template_vars.__dict__
 
         if result['pair_scan']:
@@ -625,6 +631,7 @@ def marker_regression_page():
                 imgB64 = imgdata.encode("base64")
                 bytesarray = array.array('B', imgB64)
                 result['pair_scan_array'] = bytesarray
+                result['track_configs'] = track_configs
                 rendered_template = render_template("pair_scan_results.html", **result)
         else:
             #for item in template_vars.__dict__.keys():
@@ -640,6 +647,7 @@ def marker_regression_page():
                 if (gn1_template_vars['mapping_method'] == "gemma") or (gn1_template_vars['mapping_method'] == "plink"):
                     gn1_template_vars.pop('qtlresults', None)
                 print("TEMPLATE KEYS:", list(gn1_template_vars.keys()))
+                gn1_template_vars['track_configs'] = track_configs
                 rendered_template = render_template("marker_regression_gn1.html", **gn1_template_vars)
 
     # with Bench("Rendering template"):
