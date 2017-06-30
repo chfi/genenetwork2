@@ -606,10 +606,19 @@ def marker_regression_page():
                                                indent="   ")
 
 
-        genome_config = gb.genome_track("Genome", "http://www.biodalliance.org/datasets/GRCm38/mm10.2bit")
-        qtl_config = gb.qtl_track("QTL", "http://test-gn2.genenetwork.org/api_pre1/qtl/lod2.csv")
-        gwas_config = gb.gwas_track("GWAS", "http://localhost:8080/gwascatalog.bb")
-        track_configs = [genome_config, qtl_config, gwas_config]
+        genome_config = gb.genome_track("Genome",
+                                        "http://www.biodalliance.org/datasets/GRCm38/mm10.2bit")
+        gwas_config = gb.gwas_track("GWAS",
+                                    "http://localhost:8080/gwascatalog.bb")
+
+        qtl_config = gb.qtl_track("QTL", GN_SERVER_URL+"/qtl/lod2.csv")
+        snp_config = gb.snp_track("SNP", GN_SERVER_URL+"/snp/")
+        qtlsnp = gb.multi_track("QTL, SNP Density")
+
+        gb.set_sub_track(qtl_config, qtlsnp, 0.0, 1)
+        gb.set_sub_track(snp_config, qtlsnp, 160.0, 0)
+
+        track_configs = [genome_config, qtl_config, gwas_config, snp_config, qtlsnp]
 
         result = template_vars.__dict__
 
