@@ -5,14 +5,15 @@ from flask import Blueprint
 genetics_browser = Blueprint('genetics_browser', __name__,
                              template_folder='templates')
 
-def bd_track(name):
+def bd_track(name, desc):
     conf = {}
     conf['trackType'] = 'BDTrack'
     conf['name'] = name
+    conf['desc'] = desc
     return conf
 
-def multi_track(name):
-    conf = bd_track(name)
+def multi_track(name, desc=""):
+    conf = bd_track(name, desc)
     conf['tier_type'] = 'multi'
     conf['renderer'] = 'multi'
     # TODO: should the grid be configurable?
@@ -30,30 +31,30 @@ def set_sub_track(track, multi_config, offset, z):
     track['hidden'] = True
     track['sub'] = sub
 
-def genome_track(name, uri):
-    conf = bd_track(name)
+def genome_track(name, uri, desc=""):
+    conf = bd_track(name, desc)
     conf['twoBitURI'] = uri
     conf['desc'] = 'Mouse reference genome build GRCm38'
     conf['tier_type'] = 'sequence'
     conf['provides_entrypoints'] = True
     return conf
 
-def qtl_track(name, uri):
-    conf = bd_track(name)
+def qtl_track(name, uri, desc=""):
+    conf = bd_track(name, desc)
     conf['uri'] = uri
     conf['tier_type'] = 'qtl'
     conf['renderer'] = 'qtlRenderer'
     return conf
 
-def gwas_track(name, uri):
-    conf = bd_track(name)
+def gwas_track(name, uri, desc=""):
+    conf = bd_track(name, desc)
     conf['bwgURI'] = uri
     conf['forceReduction'] = -1
     conf['renderer'] = 'gwasRenderer'
     return conf
 
-def snp_track(name, uri):
-    conf = bd_track(name)
+def snp_track(name, uri, desc=""):
+    conf = bd_track(name, desc)
     conf['jbURI'] = uri
     conf['jbQuery'] = ""
     style = {'type': 'default',
@@ -70,4 +71,12 @@ def snp_track(name, uri):
                        'HEIGHT': 120}}
     conf['style'] = [style]
     conf['refetchOnZoom'] = True
+    return conf
+
+def gene_track(name, bwgURI, trixURI, desc=""):
+    conf = bd_track(name, desc)
+    conf['bwgURI'] = bwgURI
+    conf['trixURI'] = trixURI
+    conf['stylesheet_uri'] = 'http://www.biodalliance.org/datasets/GRCm38/gencodeM2.bb'
+    conf['collapseSuperGroups'] = True
     return conf

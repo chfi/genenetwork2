@@ -615,10 +615,15 @@ def marker_regression_page():
         snp_config = gb.snp_track("SNP", GN_SERVER_URL+"/snp/")
         qtlsnp = gb.multi_track("QTL, SNP Density")
 
+        gene_config = gb.gene_track("Genes",
+                                    "http://www.biodalliance.org/datasets/GRCm38/gencodeM2.bb",
+                                    "http://www.biodalliance.org/datasets/GRCm38/gencodeM2.ix",
+                                    desc="Gene structures from GENCODE M2")
+
         gb.set_sub_track(qtl_config, qtlsnp, 0.0, 1)
         gb.set_sub_track(snp_config, qtlsnp, 160.0, 0)
 
-        track_configs = [genome_config, qtl_config, gwas_config, snp_config, qtlsnp]
+        track_configs = [genome_config, qtl_config, gene_config, gwas_config, snp_config, qtlsnp]
 
         result = template_vars.__dict__
 
