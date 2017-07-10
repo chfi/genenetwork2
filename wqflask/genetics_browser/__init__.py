@@ -30,6 +30,8 @@ def set_sub_track(track, multi_config, offset, z):
            'z': z}
     track['hidden'] = True
     track['sub'] = sub
+    if 'renderer' not in track:
+        track['renderer'] = 'sub'
 
 def genome_track(name, uri, desc=""):
     conf = bd_track(name, desc)

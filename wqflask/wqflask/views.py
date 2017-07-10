@@ -623,7 +623,7 @@ def marker_regression_page():
         gb.set_sub_track(qtl_config, qtlsnp, 0.0, 1)
         gb.set_sub_track(snp_config, qtlsnp, 160.0, 0)
 
-        track_configs = [genome_config, qtl_config, gene_config, gwas_config, snp_config, qtlsnp]
+        track_configs = [genome_config, qtl_config, snp_config, qtlsnp, gene_config, gwas_config]
 
         result = template_vars.__dict__
 
